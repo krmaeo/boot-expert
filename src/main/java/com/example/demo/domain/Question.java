@@ -15,8 +15,8 @@ public class Question {
     private List<Answer> answerList;
 
     public Question() {
-
     }
+
     public Question(String questionText, List<Answer> answerList) {
         this.questionText = questionText;
         this.answerList = answerList;

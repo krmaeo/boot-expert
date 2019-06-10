@@ -3,12 +3,15 @@ package com.example.demo;
 import com.example.demo.domain.Question;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
+
+    private List<Question> asked_questions;
 
     @Autowired
     QuestionService questionService;
@@ -32,4 +35,30 @@ public class RestController {
         questionService.saveOrUpdate(question);
         return question.getId();
     }
+    @GetMapping("/get_questions")
+    private List<Question> getQuestions() {
+        return questionService.getAllQuestions();
+    }
+
+    @PostMapping("/new_game")
+    private Question newGame(@RequestBody String request) {
+        Question given_question = null;
+        if (request.equals("get new question")) {
+            List<Question> questionList = questionService.getAllQuestions();
+            if (asked_questions.size() == questionList.size()) {
+                asked_questions.clear();
+            }
+            for (Question question : questionList) {
+                if (!asked_questions.contains(question)) {
+                    asked_questions.add(question);
+                    given_question = question;
+                }
+            }
+        }
+        return given_question;
+
+    }
+
+
+
 }

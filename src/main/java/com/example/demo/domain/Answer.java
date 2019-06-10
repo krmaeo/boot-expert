@@ -1,8 +1,12 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Answer {
 
     @Id
@@ -16,7 +20,7 @@ public class Answer {
     }
     public Answer(String text, Boolean isCorrect) {
         this.text = text;
-        //this.isCorrect = isCorrect;
+        this.isCorrect = isCorrect;
     }
 
     public Integer getId() {
@@ -27,10 +31,9 @@ public class Answer {
         return text;
     }
 
+    @JsonIgnore
     public Boolean getCorrect() {
         return isCorrect;
     }
-// public Boolean getCorrect() {
-    //    return isCorrect;
-    //}
+
 }

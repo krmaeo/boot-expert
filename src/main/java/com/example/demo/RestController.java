@@ -2,6 +2,8 @@ package com.example.demo;
 
 import com.example.demo.domain.Answer;
 import com.example.demo.domain.Question;
+import com.example.demo.errors.NoNewQuestionException;
+import com.example.demo.responseClasses.CorrectAnswer;
 import com.example.demo.service.AnswerService;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,45 +46,34 @@ public class RestController {
     private void deletePerson(@PathVariable("id") int id) {
         questionService.deleteById(id);
     }
+
     @PostMapping("/save_question")
     private int savePerson(@RequestBody Question question) {
         questionService.saveOrUpdate(question);
         return question.getId();
     }
+
     @GetMapping("/get_questions")
     private List<Question> getQuestions() {
         return questionService.getAllQuestions();
     }
 
-    /*@PostMapping("/new_game")
-    private Question newGame(@RequestBody String request) {
-        Question given_question = null;
-        if (request.equals("get new question")) {
-            List<Question> questionList = questionService.getAllQuestions();
-            if (asked_questions.size() == questionList.size()) {
-                asked_questions.clear();
-            }
-            for (Question question : questionList) {
-                if (!asked_questions.contains(question)) {
-                    asked_questions.add(question);
-                    given_question = question;
-                }
-            }
-        }
-        return given_question;
-    }*/
-
     @GetMapping("/getQuestion")
-    Question getQuestion() {
+    Question getQuestion() throws Exception {
         allQuestions = questionService.getAllQuestions();
         List<Question> notAnswered = allQuestions.stream().filter(question -> !answeredQuestions.contains(question.getId())).collect(Collectors.toList());
         Random rand = new Random();
         Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
         if (notAnswered.isEmpty()) {
-            System.exit(1);
+            throw new NoNewQuestionException("There are no more questions.");
         }
         return randomQuestion;
     }
+    @PostMapping("/checkAnswer")
+    private CorrectAnswer checkAnswer() {
+        
+    }
+
     @GetMapping("/answers/{id}")
     private Answer getAnswersById(@PathVariable("id") int id) {
         return answerService.getAnswerById(id);

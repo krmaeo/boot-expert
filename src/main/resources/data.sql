@@ -3,10 +3,10 @@ DROP TABLE IF EXISTS question;
 CREATE TABLE question (
   id INT AUTO_INCREMENT  PRIMARY KEY,
   question_text VARCHAR(250) NOT NULL,
-  additional VARCHAR(250) NOT NULL
+  additional_info VARCHAR(250) NOT NULL
 );
  
-INSERT INTO question (question_text, additional) VALUES
+INSERT INTO question (question_text, additional_info) VALUES
   ('Question 1', 'Additional 1'),
   ('Question 2', 'Additional 2'),
   ('Question 3', 'Additional 3');

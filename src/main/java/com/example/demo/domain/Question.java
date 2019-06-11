@@ -46,19 +46,22 @@ public class Question {
     @GeneratedValue
     private int id;
 
-    private String question;
+    private String question_text;
     //@ElementCollection
     //private List<Answer> answers;
-    String additionalInfo;
+    String additional_info;
 
-    public Question(int id, String question, String additionalInfo){
+    public Question(int id, String question_text, String additional_info){
 
         // @Id
         this.id = id;
 
-        this.question = question;
+        this.question_text = question_text;
         //this.answers = answers;
-        this.additionalInfo = additionalInfo;
+        this.additional_info= additional_info;
+    }
+
+    public Question() {
     }
 
     public int getId(){
@@ -66,7 +69,7 @@ public class Question {
     }
 
     public String getQuestion(){
-        return question;
+        return question_text;
     }
 
     /*
@@ -76,6 +79,6 @@ public class Question {
      */
 
     public String getAdditionalInfo() {
-        return additionalInfo;
+        return additional_info;
     }
 }

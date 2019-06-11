@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 
+/*
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Answer {
@@ -33,6 +34,43 @@ public class Answer {
 
     @JsonIgnore
     public Boolean getCorrect() {
+        return isCorrect;
+    }
+
+}
+ */
+@Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Answer {
+    @Id
+    @GeneratedValue
+    private int id;
+
+    String answer;
+    boolean isCorrect;
+    private int questionId;
+
+    public Answer(int id,int questionId, String answer, boolean isCorrect) {
+        this.id = id;
+        this.questionId = questionId;
+        this.answer = answer;
+        this.isCorrect = isCorrect;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    @JsonIgnore
+    public boolean isCorrect() {
         return isCorrect;
     }
 

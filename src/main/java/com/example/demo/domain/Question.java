@@ -1,8 +1,11 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.List;
 
+/*
 @Entity
 public class Question {
 
@@ -32,5 +35,47 @@ public class Question {
 
     public List<Answer> getAnswerList() {
         return answerList;
+    }
+}
+ */
+@Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Question {
+
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String question;
+    //@ElementCollection
+    //private List<Answer> answers;
+    String additionalInfo;
+
+    public Question(int id, String question, String additionalInfo){
+
+        // @Id
+        this.id = id;
+
+        this.question = question;
+        //this.answers = answers;
+        this.additionalInfo = additionalInfo;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getQuestion(){
+        return question;
+    }
+
+    /*
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+     */
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
     }
 }

@@ -1,6 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.domain.Answer;
 import com.example.demo.domain.Question;
+import com.example.demo.service.AnswerService;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,7 @@ public class RestController {
 
     @Autowired
     QuestionService questionService;
+    AnswerService answerService;
 
     @GetMapping("/questions")
     private List<Question> getAllQuestions() {
@@ -57,6 +60,10 @@ public class RestController {
         }
         return given_question;
 
+    }
+    @GetMapping("/answers/{id}")
+    private Answer getAnswersById(@PathVariable("id") int id) {
+        return answerService.getAnswerById(id);
     }
 
 

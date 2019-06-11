@@ -1,36 +1,36 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Question {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    private String questionText;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn()
-    private List<Answer> answerList;
+    @GeneratedValue
+    private int id;
 
-    public Question() {
-    }
+    private String question_text;
+    //@ElementCollection
+    //private List<Answer> answers;
+    String additional_info;
 
-    public Question(String questionText, List<Answer> answerList) {
-        this.questionText = questionText;
-        this.answerList = answerList;
-    }
+    public Question(int id, String question_text, String additional_info){
 
-    public Integer getId() {
-        return id;
-    }
+        // @Id
+        this.id = id;
 
-    public String getQuestionText() {
-        return questionText;
-    }
-
-    public List<Answer> getAnswerList() {
-        return answerList;
+        this.question_text = question_text;
+        //this.answers = answers;
+        this.additional_info= additional_info;
     }
 }

@@ -70,7 +70,7 @@ public class RestController {
         return randomQuestion;
     }
     @PostMapping("/checkAnswer")
-    private CorrectAnswer checkAnswer() {
+    private CorrectAnswer checkAnswer(@RequestBody Integer answerID) {
         
     }
 

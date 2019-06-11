@@ -1,6 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.domain.Answer;
 import com.example.demo.domain.Question;
+import com.example.demo.service.AnswerService;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,9 @@ public class RestController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    AnswerService answerService;
+
     @GetMapping("/questions")
     private List<Question> getAllQuestions() {
         return questionService.getAllQuestions();
@@ -24,6 +29,11 @@ public class RestController {
     @GetMapping("/question/{id}")
     private Question getPerson(@PathVariable("id") int id) {
         return questionService.getQuestionById(id);
+    }
+
+    @GetMapping("/answer/{id}")
+    private Answer getAnswer(@PathVariable("id") int id) {
+        return answerService.getAnswerById(id);
     }
 
     @DeleteMapping("/question/{id}")
@@ -38,6 +48,11 @@ public class RestController {
     @GetMapping("/get_questions")
     private List<Question> getQuestions() {
         return questionService.getAllQuestions();
+    }
+
+    @GetMapping("/get_answers")
+    private List<Answer> getAnswers() {
+        return answerService.getAllAnswers();
     }
 
     @PostMapping("/new_game")

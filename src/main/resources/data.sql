@@ -16,11 +16,11 @@ DROP TABLE IF EXISTS answer;
 CREATE TABLE answer (
                           id INT AUTO_INCREMENT  PRIMARY KEY,
                           answer_text VARCHAR(250) NOT NULL,
-                          isCorrect BOOL NOT NULL,
-                          questionId INT NOT NULL
+                          is_Correct BOOL NOT NULL,
+                          question_Id INT NOT NULL
 );
 
-INSERT INTO answer (answer_text, isCorrect,questionId) VALUES
+INSERT INTO answer (answer_text, is_Correct,question_Id) VALUES
 ('Answer 1', 0,1),
 ('Answer 2', 0,1),
 ('Answer 3', 1,1),

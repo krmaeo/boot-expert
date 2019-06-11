@@ -2,42 +2,36 @@ package com.example.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter
+@Setter
+@NoArgsConstructor
 public class Answer {
     @Id
     @GeneratedValue
     private int id;
 
-    String answer;
-    boolean isCorrect;
-    private int questionId;
+    String answer_text;
+    boolean is_Correct;
+    private int question_Id;
 
     public Answer(int id,int questionId, String answer, boolean isCorrect) {
         this.id = id;
-        this.questionId = questionId;
-        this.answer = answer;
-        this.isCorrect = isCorrect;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getQuestionId() {
-        return questionId;
-    }
-
-    public String getAnswer() {
-        return answer;
+        this.question_Id = questionId;
+        this.answer_text = answer;
+        this.is_Correct = isCorrect;
     }
 
     @JsonIgnore
-    public boolean isCorrect() {
-        return isCorrect;
+    public boolean is_Correct() {
+        return is_Correct;
     }
 
 }

@@ -69,10 +69,10 @@ public class RestController {
         }
         return randomQuestion;
     }
-    @PostMapping("/checkAnswer")
-    private CorrectAnswer checkAnswer(@RequestBody Integer answerID) {
-        
-    }
+    //@PostMapping("/checkAnswer")
+    //private CorrectAnswer checkAnswer(@RequestBody Integer answerID) {
+
+    //}
 
     @GetMapping("/answers/{id}")
     private Answer getAnswersById(@PathVariable("id") int id) {

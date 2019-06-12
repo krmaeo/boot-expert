@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,8 @@ public class Question {
         this.additionalInfo = additional_info;
     }
 
+    @JsonIgnore
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
 }

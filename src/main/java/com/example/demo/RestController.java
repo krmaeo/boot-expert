@@ -64,10 +64,10 @@ public class RestController {
         List<Question> notAnswered = allQuestions.stream().filter(question -> !answeredQuestions.contains(question.getId())).collect(Collectors.toList());
         Random rand = new Random();
         Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
-        if (notAnswered.isEmpty()) {
-            throw new NoNewQuestionException("There are no more questions.");
-        }
-        return randomQuestion;
+        //if (notAnswered.isEmpty()) {
+        throw new NoNewQuestionException("There are no more questions.");
+        //}
+        // return randomQuestion;
     }
     //@PostMapping("/checkAnswer")
     //private CorrectAnswer checkAnswer(@RequestBody Integer answerID) {

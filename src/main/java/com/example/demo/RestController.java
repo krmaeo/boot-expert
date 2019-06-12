@@ -27,7 +27,7 @@ public class RestController {
     }
 
     @GetMapping("/question/{id}")
-    private Question getPerson(@PathVariable("id") int id) {
+    private Question getQuestion(@PathVariable("id") int id) {
         return questionService.getQuestionById(id);
     }
 
@@ -36,18 +36,11 @@ public class RestController {
         return answerService.getAnswerById(id);
     }
 
-    @DeleteMapping("/question/{id}")
-    private void deletePerson(@PathVariable("id") int id) {
-        questionService.deleteById(id);
-    }
+
     @PostMapping("/save_question")
-    private int savePerson(@RequestBody Question question) {
+    private int saveQuestion(@RequestBody Question question) {
         questionService.saveOrUpdate(question);
         return question.getId();
-    }
-    @GetMapping("/get_questions")
-    private List<Question> getQuestions() {
-        return questionService.getAllQuestions();
     }
 
     @GetMapping("/get_answers")
@@ -55,24 +48,14 @@ public class RestController {
         return answerService.getAllAnswers();
     }
 
-    @PostMapping("/new_game")
-    private Question newGame(@RequestBody String request) {
-        Question given_question = null;
-        if (request.equals("get new question")) {
-            List<Question> questionList = questionService.getAllQuestions();
-            if (asked_questions.size() == questionList.size()) {
-                asked_questions.clear();
-            }
-            for (Question question : questionList) {
-                if (!asked_questions.contains(question)) {
-                    asked_questions.add(question);
-                    given_question = question;
-                }
-            }
-        }
-        return given_question;
+    /*
+    @PostMapping("/getAnswersByQuestion/{questionId}")
+    private List<Answer> getAnswersByQuestion(@PathVariable("questionId") String questionId) {
+        return answerService.findByQuestionId(questionId);
 
     }
+
+     */
 
 
 

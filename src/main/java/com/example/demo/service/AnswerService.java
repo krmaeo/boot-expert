@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.Answer;
 import com.example.demo.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,4 +31,14 @@ public class AnswerService {
     public void deleteById(Integer id) {
         answerRepository.deleteById(id);
     }
+
+    /*
+    public List<Answer> findByQuestionId(String questionId){
+        List<Answer> answers = new ArrayList<>();
+        Iterable<Answer> iterable = answerRepository.findByQuestionId(questionId);
+        iterable.forEach(answers::add);
+        return answers;
+    }
+
+     */
 }

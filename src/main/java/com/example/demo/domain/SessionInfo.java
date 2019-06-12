@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.TimeConverter.Milliseconds;
 import lombok.Getter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -8,6 +9,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @Getter
@@ -15,6 +17,8 @@ import java.util.List;
 public class SessionInfo {
     private List<Question> answeredQuestions;
     private Integer score = 0;
+    private Long start;
+    private Long passedTime;
 
     public void addQuestion(Question question){
         answeredQuestions.add(question);
@@ -23,6 +27,7 @@ public class SessionInfo {
     public void addScore() {
         score++;
     }
+
 
     public SessionInfo() {
         this.answeredQuestions = new ArrayList<>();
@@ -34,5 +39,25 @@ public class SessionInfo {
             answeredQuestionsId.add(q.getId());
         }
         return answeredQuestionsId;
+    }
+
+    public void startTime() {
+        if (start == null) {
+            start = System.currentTimeMillis();
+        }
+    }
+
+    public void setPassedTime() {
+        Long end = System.currentTimeMillis();
+        passedTime = end - start;
+    }
+
+    public Milliseconds getFinalPassedTime() {
+        return new Milliseconds(passedTime);
+    }
+
+    public Milliseconds getCurrentPassedTime() {
+        Long end = System.currentTimeMillis();
+        return new Milliseconds(end - start);
     }
 }

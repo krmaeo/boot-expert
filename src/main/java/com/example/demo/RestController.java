@@ -1,10 +1,12 @@
 package com.example.demo;
 
+import com.example.demo.TimeConverter.Milliseconds;
 import com.example.demo.domain.Answer;
 import com.example.demo.domain.Question;
 import com.example.demo.domain.SessionInfo;
 import com.example.demo.errors.NoNewQuestionException;
 import com.example.demo.responseClasses.CorrectAnswer;
+import com.example.demo.responseClasses.Results;
 import com.example.demo.responseClasses.SendQuestion;
 import com.example.demo.service.AnswerService;
 import com.example.demo.service.QuestionService;
@@ -58,10 +60,12 @@ public class RestController {
         List<Question> notAnswered = allQuestions.stream().filter(question -> (!sessionInfo.getAnsweredQuestionsId().contains(question.getId()))).collect(Collectors.toList());
         Random rand = new Random();
         if (notAnswered.isEmpty()) {
+            sessionInfo.setPassedTime();
             throw new NoNewQuestionException("There are no more questions.");
         }
         Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
         List<Answer> answersList = answerService.findByQuestionId(randomQuestion.getId());
+        sessionInfo.startTime();
         return new SendQuestion(randomQuestion, answersList);
     }
     @PostMapping("/questions/{id}/answer")
@@ -79,6 +83,22 @@ public class RestController {
             sessionInfo.addScore();
             return new CorrectAnswer(question, additionalInfo);
     }
+
+    @GetMapping("questions/results")
+    public Results sendResults() {
+        return new Results(sessionInfo.getScore(), sessionInfo.getFinalPassedTime());
+    }
+
+    @GetMapping("/questions/time/final")
+    public Milliseconds finalPassedTime() {
+        return sessionInfo.getFinalPassedTime();
+    }
+
+    @GetMapping("questions/time")
+    public Milliseconds currentPassedTime() {
+        return sessionInfo.getCurrentPassedTime();
+    }
+
     @GetMapping("/questions/score")
         Integer score() {
         return sessionInfo.getScore();

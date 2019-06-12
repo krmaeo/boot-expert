@@ -20,7 +20,7 @@ public class RestController {
     AnswerService answerService;
 
     private List<Question> allQuestions;
-    private List<Integer> answeredQuestions;
+    private List<Question> answeredQuestions;
 
     public static void main(String[] args) {
        new RestController();
@@ -63,11 +63,11 @@ public class RestController {
         allQuestions = questionService.getAllQuestions();
         List<Question> notAnswered = allQuestions.stream().filter(question -> !answeredQuestions.contains(question.getId())).collect(Collectors.toList());
         Random rand = new Random();
+        if (notAnswered.isEmpty()) {
+            throw new NoNewQuestionException("There are no more questions.");
+        }
         Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
-        //if (notAnswered.isEmpty()) {
-        throw new NoNewQuestionException("There are no more questions.");
-        //}
-        // return randomQuestion;
+        return randomQuestion;
     }
     //@PostMapping("/checkAnswer")
     //private CorrectAnswer checkAnswer(@RequestBody Integer answerID) {

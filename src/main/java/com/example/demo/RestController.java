@@ -85,9 +85,9 @@ public class RestController {
         return answerService.getAllAnswers();
     }
 
-    @GetMapping("/answersByQuestion")
-    private List<Answer> getAnswersByQuestion (){
-        return answerService.findByQuestionId(1);
+    @GetMapping("/answersByQuestion/{id}")
+    private List<Answer> getAnswersByQuestion (@PathVariable("id") int id){
+        return answerService.findByQuestionId(id);
     }
 
 

@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.domain.Answer;
 import com.example.demo.domain.Question;
+import com.example.demo.domain.SessionInfo;
 import com.example.demo.errors.NoNewQuestionException;
 import com.example.demo.responseClasses.CorrectAnswer;
 import com.example.demo.service.AnswerService;
@@ -10,32 +11,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
-    @Autowired
     QuestionService questionService;
-    @Autowired
     AnswerService answerService;
-
     private List<Question> allQuestions;
-    private List<Integer> answeredQuestions;
 
-    public static void main(String[] args) {
-       new RestController();
-    }
+    @Resource(name = "sessionInfo")
+    private SessionInfo sessionInfo;
 
-    public RestController() {
-        answeredQuestions = new ArrayList<>();
-    }
-
-
-
-    @GetMapping("/questions")
-    private List<Question> getAllQuestions() {
-        return questionService.getAllQuestions();
+    public RestController(QuestionService questionService, AnswerService answerService,SessionInfo sessionInfo) {
+        this.questionService = questionService;
+        this.answerService = answerService;
+        this.sessionInfo = new SessionInfo();
     }
 
     @GetMapping("/question/{id}")
@@ -62,13 +54,13 @@ public class RestController {
     @GetMapping("/getQuestion")
     Question getQuestion() throws Exception {
         allQuestions = questionService.getAllQuestions();
-        List<Question> notAnswered = allQuestions.stream().filter(question -> !answeredQuestions.contains(question.getId())).collect(Collectors.toList());
+        List<Question> notAnswered = allQuestions.stream().filter(question -> !sessionInfo.getAnsweredQuestions().contains(question.getId())).collect(Collectors.toList());
         Random rand = new Random();
-        Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
-       // if (notAnswered.isEmpty()) {
+        if (notAnswered.isEmpty()) {
             throw new NoNewQuestionException("There are no more questions.");
-        //}
-       // return randomQuestion;
+        }
+        Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
+        return randomQuestion;
     }
     //@PostMapping("/checkAnswer")
     //private CorrectAnswer checkAnswer(@RequestBody Integer answerID) {

@@ -24,21 +24,12 @@ public class AnswerService {
         return answerRepository.findById(id).get();
     }
 
-    public void saveOrUpdate(Answer answer) {
-        answerRepository.save(answer);
-    }
-
-    public void deleteById(Integer id) {
-        answerRepository.deleteById(id);
-    }
-
-    /*
-    public List<Answer> findByQuestionId(String questionId){
+    public List<Answer> findByQuestionId(int questionId){
         List<Answer> answers = new ArrayList<>();
         Iterable<Answer> iterable = answerRepository.findByQuestionId(questionId);
         iterable.forEach(answers::add);
         return answers;
     }
 
-     */
+
 }

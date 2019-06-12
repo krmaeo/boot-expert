@@ -2,87 +2,100 @@ package com.example.demo;
 
 import com.example.demo.domain.Answer;
 import com.example.demo.domain.Question;
+import com.example.demo.domain.SessionInfo;
 import com.example.demo.errors.NoNewQuestionException;
 import com.example.demo.responseClasses.CorrectAnswer;
+import com.example.demo.responseClasses.SendQuestion;
 import com.example.demo.service.AnswerService;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
-    @Autowired
     QuestionService questionService;
-    @Autowired
     AnswerService answerService;
-
     private List<Question> allQuestions;
-    private List<Integer> answeredQuestions;
 
-    public static void main(String[] args) {
-       new RestController();
+    @Resource(name = "sessionInfo")
+    private SessionInfo sessionInfo;
+
+    public RestController(QuestionService questionService, AnswerService answerService, SessionInfo sessionInfo) {
+        this.questionService = questionService;
+        this.answerService = answerService;
+        this.sessionInfo = new SessionInfo();
     }
 
-    public RestController() {
-        answeredQuestions = new ArrayList<>();
-    }
-
-
-
-    @GetMapping("/questions")
-    private List<Question> getAllQuestions() {
-        return questionService.getAllQuestions();
-    }
-
-    @GetMapping("/question/{id}")
+    @GetMapping("/questions/{id}")
     private Question getPerson(@PathVariable("id") int id) {
         return questionService.getQuestionById(id);
     }
 
-    @DeleteMapping("/question/{id}")
+    @DeleteMapping("/questions/delete/{id}")
     private void deletePerson(@PathVariable("id") int id) {
         questionService.deleteById(id);
     }
 
-    @PostMapping("/save_question")
+    @PostMapping("/questions/save")
     private int savePerson(@RequestBody Question question) {
         questionService.saveOrUpdate(question);
         return question.getId();
     }
 
-    @GetMapping("/get_questions")
+    @GetMapping("/questions/all")
     private List<Question> getQuestions() {
         return questionService.getAllQuestions();
     }
 
-    @GetMapping("/getQuestion")
-    Question getQuestion() throws Exception {
+    @GetMapping("/questions/any")
+    SendQuestion getQuestion() throws Exception {
         allQuestions = questionService.getAllQuestions();
-        List<Question> notAnswered = allQuestions.stream().filter(question -> !answeredQuestions.contains(question.getId())).collect(Collectors.toList());
+        List<Question> notAnswered = allQuestions.stream().filter(question -> !sessionInfo.getAnsweredQuestions().contains(question.getId())).collect(Collectors.toList());
         Random rand = new Random();
-        Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
-        if (notAnswered.isEmpty()) {
+        if (sessionInfo.getAnsweredQuestions().size() == allQuestions.size()) {
             throw new NoNewQuestionException("There are no more questions.");
         }
-        return randomQuestion;
+        Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
+        List<Answer> answersList = answerService.findByQuestionId(randomQuestion.getId());
+        return new SendQuestion(randomQuestion, answersList);
     }
-    //@PostMapping("/checkAnswer")
-    //private CorrectAnswer checkAnswer(@RequestBody Integer answerID) {
+    @PostMapping("/questions/{id}/answer")
+        CorrectAnswer checkAnswer(@PathVariable("id") Integer questionID, @RequestBody Integer answerID) {
+            List<Answer> answerList = answerService.findByQuestionId(questionID);
+            Boolean isCorrect = answerList.stream().filter(answer -> answer.getId() == answerID).map(Answer::isCorrect).findAny().orElse(null);
+            Question question = questionService.getQuestionById(questionID);
+            String additionalInfo = question.getAdditionalInfo();
+            if (!isCorrect) {
+                Integer rightAnswerID;
+                rightAnswerID = answerList.stream().filter(Answer::isCorrect).map(Answer::getId).findAny().orElse(null);
+                return new CorrectAnswer(question, rightAnswerID, additionalInfo);
+            }
+            sessionInfo.addScore();
+            return new CorrectAnswer(question, additionalInfo);
+    }
+    @GetMapping("/questions/score")
+        Integer score() {
+        return sessionInfo.getScore();
+    }
 
-    //}
-
-    @GetMapping("/answer/{id}")
+    @GetMapping("/questions/answer/{id}")
     private Answer getAnswersById(@PathVariable("id") int id) {
         return answerService.getAnswerById(id);
     }
 
-    @GetMapping("/answers")
+    @GetMapping("/questions/answers/all")
     private List<Answer> getAnswers() {
         return answerService.getAllAnswers();
+    }
+
+    @GetMapping("/answersByQuestion/{id}")
+    private List<Answer> getAnswersByQuestion (@PathVariable("id") int id){
+        return answerService.findByQuestionId(id);
     }
 
 

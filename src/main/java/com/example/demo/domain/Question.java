@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +19,17 @@ public class Question {
     @GeneratedValue
     private int id;
 
-    private String question_text;
-    String additional_info;
+    private String questionText;
+    String additionalInfo;
 
     public Question(int id, String question_text, String additional_info){
         this.id = id;
-        this.question_text = question_text;
-        this.additional_info= additional_info;
+        this.questionText = question_text;
+        this.additionalInfo = additional_info;
     }
 
+    @JsonIgnore
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
 }

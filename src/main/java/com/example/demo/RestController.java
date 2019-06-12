@@ -24,15 +24,11 @@ public class RestController {
     @Resource(name = "sessionInfo")
     private SessionInfo sessionInfo;
 
-
-
-
     public RestController(QuestionService questionService, AnswerService answerService,SessionInfo sessionInfo) {
         this.questionService = questionService;
         this.answerService = answerService;
         this.sessionInfo = new SessionInfo();
     }
-
 
     @GetMapping("/question/{id}")
     private Question getPerson(@PathVariable("id") int id) {

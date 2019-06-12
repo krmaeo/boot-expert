@@ -18,20 +18,20 @@ public class Answer {
     @GeneratedValue
     private int id;
 
-    String answer_text;
-    boolean is_Correct;
-    private int question_Id;
+    String answerText;
+    boolean isCorrect;
+    private int questionId;
 
     public Answer(int id,int questionId, String answer, boolean isCorrect) {
         this.id = id;
-        this.question_Id = questionId;
-        this.answer_text = answer;
-        this.is_Correct = isCorrect;
+        this.questionId = questionId;
+        this.answerText = answer;
+        this.isCorrect = isCorrect;
     }
 
     @JsonIgnore
-    public boolean is_Correct() {
-        return is_Correct;
+    public boolean isCorrect() {
+        return isCorrect;
     }
 
 }

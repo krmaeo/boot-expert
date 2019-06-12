@@ -18,13 +18,13 @@ public class Question {
     @GeneratedValue
     private int id;
 
-    private String question_text;
-    String additional_info;
+    private String questionText;
+    String additionalInfo;
 
     public Question(int id, String question_text, String additional_info){
         this.id = id;
-        this.question_text = question_text;
-        this.additional_info= additional_info;
+        this.questionText = question_text;
+        this.additionalInfo = additional_info;
     }
 
 }

@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class RestController {
     @Autowired
     QuestionService questionService;
+    @Autowired
     AnswerService answerService;
 
     private List<Question> allQuestions;
@@ -74,9 +75,19 @@ public class RestController {
 
     //}
 
-    @GetMapping("/answers/{id}")
+    @GetMapping("/answer/{id}")
     private Answer getAnswersById(@PathVariable("id") int id) {
         return answerService.getAnswerById(id);
+    }
+
+    @GetMapping("/answers")
+    private List<Answer> getAnswers() {
+        return answerService.getAllAnswers();
+    }
+
+    @GetMapping("/answersByQuestion/{id}")
+    private List<Answer> getAnswersByQuestion (@PathVariable("id") int id){
+        return answerService.findByQuestionId(id);
     }
 
 

@@ -35,11 +35,6 @@ public class RestController {
     }
 
 
-    @GetMapping("/questions")
-    private List<Question> getAllQuestions() {
-        return questionService.getAllQuestions();
-    }
-
     @GetMapping("/question/{id}")
     private Question getPerson(@PathVariable("id") int id) {
         return questionService.getQuestionById(id);

@@ -32,17 +32,17 @@ public class RestController {
     }
 
     @GetMapping("/questions/{id}")
-    private Question getPerson(@PathVariable("id") int id) {
+    private Question getQuestion(@PathVariable("id") int id) {
         return questionService.getQuestionById(id);
     }
 
     @DeleteMapping("/questions/delete/{id}")
-    private void deletePerson(@PathVariable("id") int id) {
+    private void deleteQuestion(@PathVariable("id") int id) {
         questionService.deleteById(id);
     }
 
     @PostMapping("/questions/save")
-    private int savePerson(@RequestBody Question question) {
+    private int saveQuestion(@RequestBody Question question) {
         questionService.saveOrUpdate(question);
         return question.getId();
     }
@@ -55,9 +55,9 @@ public class RestController {
     @GetMapping("/questions/any")
     SendQuestion getQuestion() throws Exception {
         allQuestions = questionService.getAllQuestions();
-        List<Question> notAnswered = allQuestions.stream().filter(question -> !sessionInfo.getAnsweredQuestions().contains(question.getId())).collect(Collectors.toList());
+        List<Question> notAnswered = allQuestions.stream().filter(question -> (!sessionInfo.getAnsweredQuestionsId().contains(question.getId()))).collect(Collectors.toList());
         Random rand = new Random();
-        if (sessionInfo.getAnsweredQuestions().size() == allQuestions.size()) {
+        if (notAnswered.isEmpty()) {
             throw new NoNewQuestionException("There are no more questions.");
         }
         Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
@@ -69,6 +69,7 @@ public class RestController {
             List<Answer> answerList = answerService.findByQuestionId(questionID);
             Boolean isCorrect = answerList.stream().filter(answer -> answer.getId() == answerID).map(Answer::isCorrect).findAny().orElse(null);
             Question question = questionService.getQuestionById(questionID);
+            sessionInfo.addQuestion(question);
             String additionalInfo = question.getAdditionalInfo();
             if (!isCorrect) {
                 Integer rightAnswerID;

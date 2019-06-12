@@ -27,4 +27,12 @@ public class SessionInfo {
     public SessionInfo() {
         this.answeredQuestions = new ArrayList<>();
     }
+
+    public List<Integer> getAnsweredQuestionsId (){
+        List<Integer> answeredQuestionsId = new ArrayList<>();
+        for (Question q: answeredQuestions) {
+            answeredQuestionsId.add(q.getId());
+        }
+        return answeredQuestionsId;
+    }
 }

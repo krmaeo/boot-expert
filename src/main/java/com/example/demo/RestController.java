@@ -50,18 +50,18 @@ public class RestController {
         questionService.deleteById(id);
     }
 
-    @PostMapping("/save_question")
-    private int savePerson(@RequestBody Question question) {
-        questionService.saveOrUpdate(question);
-        return question.getId();
-    }
+//    @PostMapping("/question/save")
+//    private int savePerson(@RequestBody Question question) {
+//        questionService.saveOrUpdate(question);
+//        return question.getId();
+//    }
 
-    @GetMapping("/get_questions")
+    @GetMapping("/questions")
     private List<Question> getQuestions() {
         return questionService.getAllQuestions();
     }
 
-    @GetMapping("/getQuestion")
+    @GetMapping("/question/any")
     Question getQuestion() throws Exception {
         allQuestions = questionService.getAllQuestions();
         List<Question> notAnswered = allQuestions.stream().filter(question -> !answeredQuestions.contains(question.getId())).collect(Collectors.toList());
@@ -86,8 +86,8 @@ public class RestController {
     private List<Answer> getAnswers() {
         return answerService.getAllAnswers();
     }
-
-    @GetMapping("/answersByQuestion/{id}")
+                  
+    @GetMapping("/question/{id}/answers")
     private List<Answer> getAnswersByQuestion (@PathVariable("id") int id){
         return answerService.findByQuestionId(id);
     }

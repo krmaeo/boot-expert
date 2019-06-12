@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.domain.Answer;
 import com.example.demo.domain.Question;
+import com.example.demo.domain.SessionInfo;
 import com.example.demo.errors.NoNewQuestionException;
 import com.example.demo.responseClasses.CorrectAnswer;
 import com.example.demo.service.AnswerService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,21 +20,19 @@ public class RestController {
     QuestionService questionService;
     AnswerService answerService;
     private List<Question> allQuestions;
-    private List<Integer> answeredQuestions;
 
-    public RestController(QuestionService questionService, AnswerService answerService) {
+    @Resource(name = "sessionInfo")
+    private SessionInfo sessionInfo;
+
+
+
+
+    public RestController(QuestionService questionService, AnswerService answerService,SessionInfo sessionInfo) {
         this.questionService = questionService;
         this.answerService = answerService;
-    }
+        this.sessionInfo = new SessionInfo();
 
-    public static void main(String[] args) {
-       new RestController();
     }
-
-    public RestController() {
-        answeredQuestions = new ArrayList<>();
-    }
-
 
 
     @GetMapping("/questions")
@@ -64,7 +64,7 @@ public class RestController {
     @GetMapping("/getQuestion")
     Question getQuestion() throws Exception {
         allQuestions = questionService.getAllQuestions();
-        List<Question> notAnswered = allQuestions.stream().filter(question -> !answeredQuestions.contains(question.getId())).collect(Collectors.toList());
+        List<Question> notAnswered = allQuestions.stream().filter(question -> !sessionInfo.getAnsweredQuestions().contains(question.getId())).collect(Collectors.toList());
         Random rand = new Random();
         if (notAnswered.isEmpty()) {
             throw new NoNewQuestionException("There are no more questions.");

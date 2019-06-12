@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.NoResultException;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class NoNewQuestionHandler {
     @ExceptionHandler(NoResultException.class)
     @ResponseBody
@@ -21,6 +21,7 @@ public class NoNewQuestionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse exceptionHandler(Exception e) {
+        System.out.println(e);
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error");
     }
 }

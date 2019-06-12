@@ -25,7 +25,7 @@ public class RestController {
     @Resource(name = "sessionInfo")
     private SessionInfo sessionInfo;
 
-    public RestController(QuestionService questionService, AnswerService answerService,SessionInfo sessionInfo) {
+    public RestController(QuestionService questionService, AnswerService answerService, SessionInfo sessionInfo) {
         this.questionService = questionService;
         this.answerService = answerService;
         this.sessionInfo = new SessionInfo();
@@ -75,7 +75,12 @@ public class RestController {
                 rightAnswerID = answerList.stream().filter(Answer::isCorrect).map(Answer::getId).findAny().orElse(null);
                 return new CorrectAnswer(question, rightAnswerID, additionalInfo);
             }
+            sessionInfo.addScore();
             return new CorrectAnswer(question, additionalInfo);
+    }
+    @GetMapping("/questions/score")
+        Integer score() {
+        return sessionInfo.getScore();
     }
 
     @GetMapping("/questions/answer/{id}")

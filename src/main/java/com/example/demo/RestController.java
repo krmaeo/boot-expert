@@ -15,12 +15,15 @@ import java.util.stream.Collectors;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
-    @Autowired
     QuestionService questionService;
     AnswerService answerService;
-
     private List<Question> allQuestions;
-    private List<Question> answeredQuestions;
+    private List<Integer> answeredQuestions;
+
+    public RestController(QuestionService questionService, AnswerService answerService) {
+        this.questionService = questionService;
+        this.answerService = answerService;
+    }
 
     public static void main(String[] args) {
        new RestController();
@@ -74,9 +77,19 @@ public class RestController {
 
     //}
 
-    @GetMapping("/answers/{id}")
+    @GetMapping("/answer/{id}")
     private Answer getAnswersById(@PathVariable("id") int id) {
         return answerService.getAnswerById(id);
+    }
+
+    @GetMapping("/answers")
+    private List<Answer> getAnswers() {
+        return answerService.getAllAnswers();
+    }
+
+    @GetMapping("/answersByQuestion/{id}")
+    private List<Answer> getAnswersByQuestion (@PathVariable("id") int id){
+        return answerService.findByQuestionId(id);
     }
 
 

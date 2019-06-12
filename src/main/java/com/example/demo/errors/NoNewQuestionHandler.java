@@ -10,11 +10,11 @@ import javax.persistence.NoResultException;
 
 @ControllerAdvice
 public class NoNewQuestionHandler {
-    @ExceptionHandler(NoNewQuestionException.class)
+    @ExceptionHandler(NoResultException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse notFoundException(final NoNewQuestionException exception) {
-        return new ErrorResponse(HttpStatus.NOT_FOUND, "No new questions.");
+        return new ErrorResponse(HttpStatus.NOT_FOUND, "Not Found");
     }
 
     @ExceptionHandler(Exception.class)

@@ -14,9 +14,14 @@ import java.util.List;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SessionInfo {
     private List<Question> answeredQuestions;
+    private Integer score = 0;
 
     public void addQuestion(Question question){
         answeredQuestions.add(question);
+    }
+
+    public void addScore() {
+        score++;
     }
 
     public SessionInfo() {

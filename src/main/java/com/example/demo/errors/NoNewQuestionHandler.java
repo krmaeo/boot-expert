@@ -13,7 +13,7 @@ public class NoNewQuestionHandler {
     @ExceptionHandler(NoResultException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public NoNewQuestionException notFoundException(final NoNewQuestionException exception) {
+    public ErrorResponse notFoundException(final NoNewQuestionException exception) {
         return new ErrorResponse(HttpStatus.NOT_FOUND, "Not Found");
     }
 

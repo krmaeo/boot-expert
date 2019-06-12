@@ -15,13 +15,15 @@ import java.util.stream.Collectors;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
-    @Autowired
     QuestionService questionService;
-    @Autowired
     AnswerService answerService;
-
     private List<Question> allQuestions;
     private List<Integer> answeredQuestions;
+
+    public RestController(QuestionService questionService, AnswerService answerService) {
+        this.questionService = questionService;
+        this.answerService = answerService;
+    }
 
     public static void main(String[] args) {
        new RestController();
@@ -64,11 +66,11 @@ public class RestController {
         allQuestions = questionService.getAllQuestions();
         List<Question> notAnswered = allQuestions.stream().filter(question -> !answeredQuestions.contains(question.getId())).collect(Collectors.toList());
         Random rand = new Random();
-        Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
-       // if (notAnswered.isEmpty()) {
+        if (notAnswered.isEmpty()) {
             throw new NoNewQuestionException("There are no more questions.");
-        //}
-       // return randomQuestion;
+        }
+        Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
+        return randomQuestion;
     }
     //@PostMapping("/checkAnswer")
     //private CorrectAnswer checkAnswer(@RequestBody Integer answerID) {

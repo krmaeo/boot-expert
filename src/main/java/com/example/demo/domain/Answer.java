@@ -34,4 +34,8 @@ public class Answer {
         return isCorrect;
     }
 
+    @JsonIgnore
+    public int getQuestionId() {
+        return questionId;
+    }
 }

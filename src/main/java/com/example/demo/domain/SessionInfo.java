@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @Getter
-@Scope(value = WebApplicationContext.SCOPE_SESSION,proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SessionInfo {
     private List<Question> answeredQuestions;
 

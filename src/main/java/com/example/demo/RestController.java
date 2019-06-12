@@ -31,7 +31,6 @@ public class RestController {
         this.questionService = questionService;
         this.answerService = answerService;
         this.sessionInfo = new SessionInfo();
-
     }
 
 

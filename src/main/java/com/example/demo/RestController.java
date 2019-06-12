@@ -35,10 +35,7 @@ public class RestController {
 
 
 
-    @GetMapping("/questions")
-    private List<Question> getAllQuestions() {
-        return questionService.getAllQuestions();
-    }
+
 
     @GetMapping("/question/{id}")
     private Question getPerson(@PathVariable("id") int id) {
@@ -86,7 +83,7 @@ public class RestController {
     private List<Answer> getAnswers() {
         return answerService.getAllAnswers();
     }
-                  
+
     @GetMapping("/question/{id}/answers")
     private List<Answer> getAnswersByQuestion (@PathVariable("id") int id){
         return answerService.findByQuestionId(id);

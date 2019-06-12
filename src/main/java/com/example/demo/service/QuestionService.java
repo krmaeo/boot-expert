@@ -21,14 +21,17 @@ public class QuestionService {
     }
 
     public Question getQuestionById(Integer id) {
+
         return questionRepository.findById(id).get();
     }
 
     public void saveOrUpdate(Question question) {
+
         questionRepository.save(question);
     }
 
     public void deleteById(Integer id) {
+
         questionRepository.deleteById(id);
     }
 }

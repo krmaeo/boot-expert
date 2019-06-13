@@ -33,6 +33,11 @@ public class RestController {
         this.sessionInfo = new SessionInfo();
     }
 
+    @PostMapping("/rfidinfo")
+    private void getDeviceInfo(@RequestBody String data) {
+        System.out.println(data);
+    }
+
     @GetMapping("/questions/{id}")
     private Question getQuestion(@PathVariable("id") int id) {
         return questionService.getQuestionById(id);

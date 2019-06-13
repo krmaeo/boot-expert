@@ -32,8 +32,8 @@ public class RestController {
     }
 
     @PostMapping("/rfidinfo")
-    private Info getDeviceInfo(@RequestBody Info info) {
-        return info;
+    private RfIdInfo getDeviceInfo(@RequestBody RfIdInfo rfIdInfo) {
+        return rfIdInfo;
     }
 
     @GetMapping("/questions/{id}")

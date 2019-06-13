@@ -9,10 +9,10 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class Info {
-    List<RfidInfo> readers;
+public class RfIdInfo {
+    List<DeviceStatusAndId> readers;
 
-    public Info(List<RfidInfo> readers) {
+    public RfIdInfo(List<DeviceStatusAndId> readers) {
         this.readers = readers;
     }
 }

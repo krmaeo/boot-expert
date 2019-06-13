@@ -8,11 +8,11 @@ import lombok.Setter;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class RfidInfo {
+public class DeviceStatusAndId {
     private Integer deviceId;
     private int state;
 
-    public RfidInfo(Integer deviceId, int state) {
+    public DeviceStatusAndId(Integer deviceId, int state) {
         this.deviceId = deviceId;
         this.state = state;
     }

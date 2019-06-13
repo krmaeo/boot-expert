@@ -38,23 +38,23 @@ public class RestController {
         return questionService.getQuestionById(id);
     }
 
-    @DeleteMapping("/questions/delete/{id}")
+    @DeleteMapping("/questions/{id}")
     private void deleteQuestion(@PathVariable("id") int id) {
         questionService.deleteById(id);
     }
 
-    @PostMapping("/questions/save")
+    @PostMapping("/questions/question")
     private int saveQuestion(@RequestBody Question question) {
         questionService.saveOrUpdate(question);
         return question.getId();
     }
 
-    @GetMapping("/questions/all")
+    @GetMapping("/questions")
     private List<Question> getQuestions() {
         return questionService.getAllQuestions();
     }
 
-    @GetMapping("/questions/any")
+    @GetMapping("/questions/unanswered/any")
     SendQuestion getQuestion() throws Exception {
         allQuestions = questionService.getAllQuestions();
         List<Question> notAnswered = allQuestions.stream().filter(question -> (!sessionInfo.getAnsweredQuestionsId().contains(question.getId()))).collect(Collectors.toList());
@@ -84,41 +84,29 @@ public class RestController {
             return new CorrectAnswer(question, additionalInfo);
     }
 
-    @GetMapping("questions/results")
+    @GetMapping("/session-info/results")
     public Results sendResults() {
         return new Results(sessionInfo.getScore(), sessionInfo.getFinalPassedTime());
     }
 
-    @GetMapping("/questions/time/final")
+    @GetMapping("/session-info/time/final")
     public Milliseconds finalPassedTime() {
         return sessionInfo.getFinalPassedTime();
     }
 
-    @GetMapping("questions/time")
+    @GetMapping("/session-info/time/current")
     public Milliseconds currentPassedTime() {
         return sessionInfo.getCurrentPassedTime();
     }
 
-    @GetMapping("/questions/score")
+    @GetMapping("/session-info/score")
         Integer score() {
         return sessionInfo.getScore();
     }
 
-    @GetMapping("/questions/answer/{id}")
-    private Answer getAnswersById(@PathVariable("id") int id) {
-        return answerService.getAnswerById(id);
-    }
-
-    @GetMapping("/questions/answers/all")
+    @GetMapping("/questions/answers")
     private List<Answer> getAnswers() {
         return answerService.getAllAnswers();
     }
-
-    @GetMapping("/answersByQuestion/{id}")
-    private List<Answer> getAnswersByQuestion (@PathVariable("id") int id){
-        return answerService.findByQuestionId(id);
-    }
-
-
 
 }

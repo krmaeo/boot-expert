@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.NoResultException;
 
-//@ControllerAdvice
+@ControllerAdvice
 public class NoNewQuestionHandler {
     @ExceptionHandler(NoResultException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse notFoundException(final NoNewQuestionException exception) {
-        return new ErrorResponse(HttpStatus.NOT_FOUND, "Not Found");
+        return new ErrorResponse(HttpStatus.NOT_FOUND, "No more questions");
     }
 
     @ExceptionHandler(Exception.class)

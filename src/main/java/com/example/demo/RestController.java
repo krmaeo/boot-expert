@@ -80,7 +80,7 @@ public class RestController {
         return new GetQuestionResponse(randomQuestion, answersList);
     }
 
-    @PostMapping("device/{device-id}/questions/{id}/answer")
+    @PostMapping("devices/{device-id}/questions/{id}/answer")
     CorrectAnswer checkAnswerWIthDevice(@PathVariable("id") Integer questionID, @RequestBody Integer answerID) {
         return getCorrectAnswer(questionID, answerID);
     }
@@ -111,7 +111,7 @@ public class RestController {
         return deviceService.getAllDevices();
     }
 
-    @GetMapping("/devices/{id]")
+    @GetMapping("/devices/{id}")
     private Device getDeviceById(@PathVariable("id") Integer deviceId) {
         return deviceService.getDeviceById(deviceId);
     }
@@ -121,8 +121,18 @@ public class RestController {
         return new Results(sessionInfo.getScore(), sessionInfo.getFinalPassedTime());
     }
 
+    @GetMapping("devices/{id}/session-info/results")
+    public Results sendResultsDevice() {
+        return new Results(sessionInfo.getScore(), sessionInfo.getFinalPassedTime());
+    }
+
     @GetMapping("/session-info/time/final")
     public Milliseconds finalPassedTime() {
+        return sessionInfo.getFinalPassedTime();
+    }
+
+    @GetMapping("/devices/{id}/session-info/time/final")
+    public Milliseconds finalPassedTimeDevice() {
         return sessionInfo.getFinalPassedTime();
     }
 
@@ -131,8 +141,18 @@ public class RestController {
         return sessionInfo.getCurrentPassedTime();
     }
 
+    @GetMapping("/devices/{id}/session-info/time/current")
+    public Milliseconds currentPassedTimeDevice() {
+        return sessionInfo.getCurrentPassedTime();
+    }
+
     @GetMapping("/session-info/score")
     Integer score() {
+        return sessionInfo.getScore();
+    }
+
+    @GetMapping("/device/{id}/session-info/score")
+    Integer getScoreWithDeviceId() {
         return sessionInfo.getScore();
     }
 
@@ -141,4 +161,8 @@ public class RestController {
         return answerService.getAllAnswers();
     }
 
+    @GetMapping("/device/{id}/questions/answers")
+    private List<Answer> getAnswersDevice() {
+        return answerService.getAllAnswers();
+    }
 }

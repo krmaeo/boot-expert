@@ -1,6 +1,7 @@
-package com.example.demo.domain;
+package com.example.demo;
 
-import com.example.demo.TimeConverter.Milliseconds;
+import com.example.demo.domain.Question;
+import com.example.demo.timeConverter.Milliseconds;
 import lombok.Getter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -9,7 +10,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Component
 @Getter

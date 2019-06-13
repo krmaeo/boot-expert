@@ -1,6 +1,6 @@
 package com.example.demo.responseClasses;
 
-import com.example.demo.TimeConverter.Milliseconds;
+import com.example.demo.timeConverter.Milliseconds;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;

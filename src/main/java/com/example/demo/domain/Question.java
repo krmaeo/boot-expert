@@ -21,6 +21,7 @@ public class Question {
 
     private String questionText;
     String additionalInfo;
+    private int deviceId;
 
     public Question(int id, String question_text, String additional_info){
         this.id = id;

@@ -11,11 +11,11 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class SendQuestion {
+public class GetQuestionResponse {
     private Question question;
     private List<Answer> answerList;
 
-    public SendQuestion(Question question, List<Answer> answersList) {
+    public GetQuestionResponse(Question question, List<Answer> answersList) {
         this.question = question;
         this.answerList = answersList;
     }

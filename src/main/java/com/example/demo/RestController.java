@@ -1,13 +1,12 @@
 package com.example.demo;
 
-import com.example.demo.TimeConverter.Milliseconds;
+import com.example.demo.timeConverter.Milliseconds;
 import com.example.demo.domain.Answer;
 import com.example.demo.domain.Question;
-import com.example.demo.domain.SessionInfo;
 import com.example.demo.errors.NoNewQuestionException;
 import com.example.demo.responseClasses.CorrectAnswer;
 import com.example.demo.responseClasses.Results;
-import com.example.demo.responseClasses.SendQuestion;
+import com.example.demo.responseClasses.GetQuestionResponse;
 import com.example.demo.service.AnswerService;
 import com.example.demo.service.QuestionService;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 public class RestController {
     QuestionService questionService;
     AnswerService answerService;
-    private List<Question> allQuestions;
 
     @Resource(name = "sessionInfo")
     private SessionInfo sessionInfo;
@@ -41,7 +39,7 @@ public class RestController {
         questionService.deleteById(id);
     }
 
-    @PostMapping("/questions/question")
+    @PostMapping("/questions")
     private int saveQuestion(@RequestBody Question question) {
         questionService.saveOrUpdate(question);
         return question.getId();
@@ -53,18 +51,18 @@ public class RestController {
     }
 
     @GetMapping("/questions/unanswered/any")
-    SendQuestion getQuestion() throws Exception {
-        allQuestions = questionService.getAllQuestions();
+    GetQuestionResponse getQuestion() throws Exception {
+        List<Question> allQuestions = questionService.getAllQuestions();
         List<Question> notAnswered = allQuestions.stream().filter(question -> (!sessionInfo.getAnsweredQuestionsId().contains(question.getId()))).collect(Collectors.toList());
-        Random rand = new Random();
         if (notAnswered.isEmpty()) {
             sessionInfo.setPassedTime();
             throw new NoNewQuestionException("There are no more questions.");
         }
+        Random rand = new Random();
         Question randomQuestion = notAnswered.get(rand.nextInt(notAnswered.size()));
         List<Answer> answersList = answerService.findByQuestionId(randomQuestion.getId());
         sessionInfo.startTime();
-        return new SendQuestion(randomQuestion, answersList);
+        return new GetQuestionResponse(randomQuestion, answersList);
     }
     @PostMapping("/questions/{id}/answer")
     CorrectAnswer checkAnswer(@PathVariable("id") Integer questionID, @RequestBody Integer answerID) {

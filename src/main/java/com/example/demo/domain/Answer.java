@@ -22,7 +22,7 @@ public class Answer {
     boolean isCorrect;
     private int questionId;
 
-    public Answer(int id,int questionId, String answer, boolean isCorrect) {
+    public Answer(int id, int questionId, String answer, boolean isCorrect) {
         this.id = id;
         this.questionId = questionId;
         this.answerText = answer;

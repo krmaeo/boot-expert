@@ -1,14 +1,12 @@
 package com.example.demo;
 
 import com.example.demo.domain.Device;
+import com.example.demo.responseClasses.*;
 import com.example.demo.service.DeviceService;
 import com.example.demo.timeConverter.Milliseconds;
 import com.example.demo.domain.Answer;
 import com.example.demo.domain.Question;
 import com.example.demo.errors.NoNewQuestionException;
-import com.example.demo.responseClasses.CorrectAnswer;
-import com.example.demo.responseClasses.Results;
-import com.example.demo.responseClasses.GetQuestionResponse;
 import com.example.demo.service.AnswerService;
 import com.example.demo.service.QuestionService;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +32,8 @@ public class RestController {
     }
 
     @PostMapping("/rfidinfo")
-    private void getDeviceInfo(@RequestBody String data) {
-        System.out.println(data);
+    private Info getDeviceInfo(@RequestBody Info info) {
+        return info;
     }
 
     @GetMapping("/questions/{id}")
@@ -91,8 +89,8 @@ public class RestController {
     }
 
     @PostMapping("/questions/{id}/answer")
-    CorrectAnswer checkAnswer(@PathVariable("id") Integer questionID, @RequestBody Integer answerID) {
-        return getCorrectAnswer(questionID, answerID);
+    CorrectAnswer checkAnswer(@PathVariable("id") Integer questionID, @RequestBody AnswerId answerId) {
+        return getCorrectAnswer(questionID, answerId.getAnswerId());
     }
 
     private CorrectAnswer getCorrectAnswer(@PathVariable("id") Integer questionID, @RequestBody Integer answerID) {

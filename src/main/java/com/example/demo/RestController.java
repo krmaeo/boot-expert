@@ -10,8 +10,6 @@ import com.example.demo.responseClasses.Results;
 import com.example.demo.responseClasses.SendQuestion;
 import com.example.demo.service.AnswerService;
 import com.example.demo.service.QuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

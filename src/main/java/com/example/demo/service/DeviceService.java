@@ -5,6 +5,9 @@ import com.example.demo.repository.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class DeviceService {
 
@@ -15,5 +18,10 @@ public class DeviceService {
         return deviceRepository.findById(id).get();
     }
 
+    public List<Device> getAllDevices() {
+        List<Device> devices = new ArrayList<>();
+        deviceRepository.findAll().forEach(device -> devices.add(device));
+        return devices;
+    }
 
 }

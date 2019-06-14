@@ -8,9 +8,9 @@ CREATE TABLE question (
 );
  
 INSERT INTO question (question_text, additional_info, device_id) VALUES
-  ('Question 1', 'Additional 1',1),
-  ('Question 2', 'Additional 2',1),
-  ('Question 3', 'Additional 3',1),
+  ('How many children have ProEkspert workers in total?', 'Around 180 says Priit',1),
+  ('How many exits has Tallinn office', 'We believe there is no correct answer in this maze',1),
+  ('How fun was bootcamp', 'Results are based on the faces of bootcampers',1),
     ('Question 4', 'Additional 4',2),
   ('Question 5', 'Additional 5',2),
   ('Question 6', 'Additional 6',2),
@@ -28,15 +28,15 @@ CREATE TABLE answer (
 );
 
 INSERT INTO answer (answer_text, is_Correct,question_Id) VALUES
-('Answer 1', 0,1),
-('Answer 2', 0,1),
-('Answer 3', 1,1),
-('Answer 4', 0,2),
-('Answer 5', 0,2),
-('Answer 6', 1,2),
-('Answer 7', 0,3),
-('Answer 8', 0,3),
-('Answer 9', 1,3),
+('21', 0,1),
+('76', 0,1),
+('180', 1,1),
+('3', 0,2),
+('4', 1,2),
+('5', 0,2),
+('What bootcamp?', 0,3),
+('Super-duper awesome', 1,3),
+('Boring', 0,3),
 ('Answer 10', 0,4),
 ('Answer 11', 0,4),
 ('Answer 12', 1,4),
@@ -66,6 +66,6 @@ CREATE TABLE device (
 );
 
 INSERT INTO device (title, description,url) VALUES
-  ('Title 1', 'Description 1','https://images2.minutemediacdn.com/image/upload/c_crop,h_1193,w_2121,x_0,y_175/f_auto,q_auto,w_1100/v1554921998/shape/mentalfloss/549585-istock-909106260.jpg'),
-  ('Title 2', 'Description 2','https://pbs.twimg.com/profile_images/1080855598298611713/lTS-u1Iu.jpg'),
-  ('Title 3', 'Description 3','https://i.kym-cdn.com/photos/images/newsfeed/001/237/748/a8e.jpg');
+  ('Bootcamp awesome device', 'Pick me!','https://images2.minutemediacdn.com/image/upload/c_crop,h_1193,w_2121,x_0,y_175/f_auto,q_auto,w_1100/v1554921998/shape/mentalfloss/549585-istock-909106260.jpg'),
+  ('Bootcamp less awesome device', 'Do not pick me','https://pbs.twimg.com/profile_images/1080855598298611713/lTS-u1Iu.jpg'),
+  ('Bootcamp rather boring part', 'Can not solve in one line','https://i.kym-cdn.com/photos/images/newsfeed/001/237/748/a8e.jpg');

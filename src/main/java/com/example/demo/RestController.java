@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.domain.Device;
+import com.example.demo.errors.NoResponseFromDevices;
 import com.example.demo.responseClasses.*;
 import com.example.demo.service.DeviceService;
 import com.example.demo.timeConverter.Milliseconds;
@@ -21,7 +22,7 @@ public class RestController {
     QuestionService questionService;
     AnswerService answerService;
     DeviceService deviceService;
-    RfIdInfo rfIdInfo;
+    RfIdInfo rfIdInfo = null;
 
     @Resource(name = "sessionInfo")
     private SessionInfo sessionInfo;
@@ -51,7 +52,7 @@ public class RestController {
     @GetMapping("/get-changes")
     private SendChanges changes() throws Exception{
         if (rfIdInfo == null) {
-            throw new Exception("No changes yet.");
+            throw new NoResponseFromDevices("No changes yet.");
         }
         return rfIdInfo.checkForChanges();
     }

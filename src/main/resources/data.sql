@@ -67,5 +67,5 @@ CREATE TABLE device (
 
 INSERT INTO device (title, description,url) VALUES
   ('Title 1', 'Description 1','https://images2.minutemediacdn.com/image/upload/c_crop,h_1193,w_2121,x_0,y_175/f_auto,q_auto,w_1100/v1554921998/shape/mentalfloss/549585-istock-909106260.jpg'),
-  ('Title 2', 'Description 2','https://images2.minutemediacdn.com/image/upload/c_crop,h_1193,w_2121,x_0,y_175/f_auto,q_auto,w_1100/v1554921998/shape/mentalfloss/549585-istock-909106260.jpg'),
-  ('Title 3', 'Description 3','https://images2.minutemediacdn.com/image/upload/c_crop,h_1193,w_2121,x_0,y_175/f_auto,q_auto,w_1100/v1554921998/shape/mentalfloss/549585-istock-909106260.jpg');
+  ('Title 2', 'Description 2','https://pbs.twimg.com/profile_images/1080855598298611713/lTS-u1Iu.jpg'),
+  ('Title 3', 'Description 3','https://i.kym-cdn.com/photos/images/newsfeed/001/237/748/a8e.jpg');

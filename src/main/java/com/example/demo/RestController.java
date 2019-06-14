@@ -33,6 +33,8 @@ public class RestController {
         this.sessionInfo = new SessionInfo();
     }
 
+
+
     @PostMapping("/rfidinfo")
     private RfIdInfo getDeviceInfo(@RequestBody RfIdInfo rfIdInfo) {
         this.rfIdInfo = rfIdInfo;
@@ -40,9 +42,10 @@ public class RestController {
     }
 
     @GetMapping("/rfidinfo")
-    private String getDeviceInfo(@RequestParam ("0")String test) {
-        System.out.println(test);
-        return test;
+    private Map getDeviceInfo(@RequestParam Map<String, String> map) {
+        rfIdInfo = new RfIdInfo(map);
+        System.out.println(rfIdInfo);
+        return map;
     }
 
     @GetMapping("/get-changes")

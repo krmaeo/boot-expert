@@ -46,7 +46,10 @@ public class RestController {
     }
 
     @GetMapping("/get-changes")
-    private SendChanges changes() {
+    private SendChanges changes() throws Exception{
+        if (rfIdInfo == null) {
+            throw new Exception("No changes yet.");
+        }
         return rfIdInfo.checkForChanges();
     }
 

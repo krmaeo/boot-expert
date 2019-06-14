@@ -9,6 +9,7 @@ import com.example.demo.domain.Question;
 import com.example.demo.errors.NoNewQuestionException;
 import com.example.demo.service.AnswerService;
 import com.example.demo.service.QuestionService;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,11 +21,12 @@ public class RestController {
     QuestionService questionService;
     AnswerService answerService;
     DeviceService deviceService;
+    RfIdInfo rfIdInfo;
 
     @Resource(name = "sessionInfo")
     private SessionInfo sessionInfo;
 
-    public RestController(QuestionService questionService, AnswerService answerService, DeviceService deviceService, SessionInfo sessionInfo) {
+    public RestController(QuestionService questionService, AnswerService answerService, DeviceService deviceService) {
         this.questionService = questionService;
         this.answerService = answerService;
         this.deviceService = deviceService;
@@ -33,7 +35,19 @@ public class RestController {
 
     @PostMapping("/rfidinfo")
     private RfIdInfo getDeviceInfo(@RequestBody RfIdInfo rfIdInfo) {
+        this.rfIdInfo = rfIdInfo;
         return rfIdInfo;
+    }
+
+    @GetMapping("/rfidinfo")
+    private String getDeviceInfo(@RequestParam ("0")String test) {
+        System.out.println(test);
+        return test;
+    }
+
+    @GetMapping("/get-changes")
+    private SendChanges changes() {
+        return rfIdInfo.checkForChanges();
     }
 
     @GetMapping("/questions/{id}")

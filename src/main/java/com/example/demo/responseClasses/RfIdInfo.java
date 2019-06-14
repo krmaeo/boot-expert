@@ -15,4 +15,14 @@ public class RfIdInfo {
     public RfIdInfo(List<DeviceStatusAndId> readers) {
         this.readers = readers;
     }
+
+    public SendChanges checkForChanges() {
+        SendChanges sendChanges = null;
+        for (DeviceStatusAndId reader : readers) {
+            if (reader.getState() == 0) {
+                return sendChanges = new SendChanges(true, reader.getDeviceId());
+            }
+        }
+        return new SendChanges(false, 404);
+    }
 }

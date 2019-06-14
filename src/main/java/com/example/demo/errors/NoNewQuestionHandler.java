@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.NoResultException;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class NoNewQuestionHandler {
     @ExceptionHandler(NoResultException.class)
     @ResponseBody
